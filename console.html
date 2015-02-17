@@ -33,7 +33,7 @@
         <input id="in" tabindex="0"/>
     </body>
     <script type="text/javascript" src="./js/yui-min.js"></script>
-	 <script type="text/javascript" src="./js/calculator.js"></script>
+	 <script type="text/javascript" src="./js/app.js"></script>
 	 <script type="text/javascript" src="./js/log4javascript.js"></script>
     <script type="text/javascript">
         YUI().use("node", function(Y) {
@@ -100,7 +100,7 @@
 				log.addAppender(appender);
 				log4javascript.setEnabled(1)
 				log.info("log started");
-				Calculator.init();
+				app.init();
 			    outputToConsole("Hello, welcome to application. Please type 'test' to test a method.")
                 Y.one("body").setStyle("paddingBottom", Y.one("#in").get("offsetHeight"));
                 Y.one("#in").on("keydown", function(e) {

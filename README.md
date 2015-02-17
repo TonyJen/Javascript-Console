@@ -8,3 +8,4 @@ To Use:
 
 1. Download to app directory.
 2. run console.html.
+3. Disable pop up blocker for log window.
