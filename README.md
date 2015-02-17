@@ -7,5 +7,5 @@ This ia a sample javascript application which have a console, assertion and log 
 To Use:
 
 1. Download to app directory.
-2. run console.html.
+2. Open console.html in chrome.
 3. Disable pop up blocker for log window.
