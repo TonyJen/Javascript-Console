@@ -1,8 +1,8 @@
-Calculator = {
+app = {
 		init :  function() {
-				log.info("calculator log started");
+				log.info("app log started");
 		},
-         greet : function(args){
+         start : function(args){
 			    log.info("greet");
 				return ("greet test");
 		 },		  

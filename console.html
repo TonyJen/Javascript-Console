@@ -44,7 +44,7 @@
                     handler: doStuff
                 },
                 {
-                    name: "greet",
+                    name: "start",
                     handler: function(args) {
 					   var result = Calculator.greet(args);
 					   outputToConsole(result);
@@ -62,14 +62,7 @@
 					   }
 					   
                     }
-                },				
-				{
-					name: "calculator",
-					handler: function(args){
-						var result = Calculator.greet(args);
-						outputToConsole(result);
-					}
-				}
+                }		
             ];
 
             function processCommand() {
@@ -108,7 +101,7 @@
 				log4javascript.setEnabled(1)
 				log.info("log started");
 				Calculator.init();
-			    outputToConsole("Hello, welcome to Calculator.")
+			    outputToConsole("Hello, welcome to application. Please type 'test' to test a method.")
                 Y.one("body").setStyle("paddingBottom", Y.one("#in").get("offsetHeight"));
                 Y.one("#in").on("keydown", function(e) {
                     if (e.charCode === 13) {
