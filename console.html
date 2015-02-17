@@ -1,114 +1,120 @@
 <!doctype html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-        <title>Console</title>
-        <link rel="stylesheet" type="text/css" href="./css/cssreset-min.css"/>
-        <style type="text/css">
-            html {
-                background-color: #000;
-                }
-            body {
-                font-family: "Lucida Console";
-                font-size: 13px;
-                color: #0f0;
-                }
-            #in {
-                display: block;
-                position: fixed;
-                left: 0;
-                bottom: 0;
-                width: 100%;
-                padding: 8px;
-                border-color: #fff;
-                border-width: 1px 0 0 0;
-                background-color: #000;
-                color: #0f0;
-                }
-        </style>
-    </head>
-    <body>
-        <div id="out"></div>
-        <input id="in" tabindex="0"/>
-    </body>
-    <script type="text/javascript" src="./js/yui-min.js"></script>
-	 <script type="text/javascript" src="./js/app.js"></script>
-	 <script type="text/javascript" src="./js/log4javascript.js"></script>
-    <script type="text/javascript">
-        YUI().use("node", function(Y) {
 
-            var COMMANDS = [
-                {
-                    name: "do_stuff",
-                    handler: doStuff
-                },
-                {
-                    name: "start",
-                    handler: function(args) {
-					   var result = Calculator.greet(args);
-					   outputToConsole(result);
-                    }
-                },				
-				 {
-                    name: "assert",
-                    handler: function(args) {
-					   if (args.length > 0){
-							var result = Calculator.assert(args,"test assertion");
-							outputToConsole("result");
-					   }
-					   else{
-						    outputToConsole("no argument given");
-					   }
-					   
-                    }
-                }		
-            ];
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>Console</title>
+    <link rel="stylesheet" type="text/css" href="./css/cssreset-min.css" />
+    <style type="text/css">
+        html {
+            background-color: #000;
+        }
+        
+        body {
+            font-family: "Lucida Console";
+            font-size: 13px;
+            color: #0f0;
+        }
+        
+        #in {
+            display: block;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            padding: 8px;
+            border-color: #fff;
+            border-width: 1px 0 0 0;
+            background-color: #000;
+            color: #0f0;
+        }
+    </style>
+</head>
 
-            function processCommand() {
-                var inField = Y.one("#in");
-                var input = inField.get("value");
-                var parts = input.replace(/\s+/g, " ").split(" ");
-                var command = parts[0];
-                var args = parts.length > 1 ? parts.slice(1, parts.length) : [];
+<body>
+    <div id="out"></div>
+    <input id="in" tabindex="0" />
+</body>
+<script type="text/javascript" src="./js/yui-min.js"></script>
+<script type="text/javascript" src="./js/app.js"></script>
+<script type="text/javascript" src="./js/log4javascript.js"></script>
+<script type="text/javascript">
+    YUI().use("node", function(Y) {
 
-                inField.set("value", "");
-                outputToConsole("> " + input); 
-                for (var i = 0; i < COMMANDS.length; i++) {
-                    if (command === COMMANDS[i].name) {
-                        COMMANDS[i].handler(args);
-                        return;
-                    }
+        var COMMANDS = [{
+            name: "do_stuff",
+            handler: doStuff
+        }, {
+            name: "start",
+            handler: function(args) {
+                var result = app.start(args);
+                outputToConsole(result);
+            }
+        }, {
+            name: "end",
+            handler: function(args) {
+                var result = app.end(args);
+                outputToConsole(result);
+            }
+        }, {
+            name: "assert",
+            handler: function(args) {
+                if (args.length > 0) {
+                    var result = Calculator.assert(args, "test assertion");
+                    outputToConsole("result");
+                } else {
+                    outputToConsole("no argument given");
                 }
 
-                outputToConsole("Unsupported Command: " + command);
+            }
+        }];
+
+        function processCommand() {
+            var inField = Y.one("#in");
+            var input = inField.get("value");
+            var parts = input.replace(/\s+/g, " ").split(" ");
+            var command = parts[0];
+            var args = parts.length > 1 ? parts.slice(1, parts.length) : [];
+
+            inField.set("value", "");
+            outputToConsole("> " + input);
+            for (var i = 0; i < COMMANDS.length; i++) {
+                if (command === COMMANDS[i].name) {
+                    COMMANDS[i].handler(args);
+                    return;
+                }
             }
 
-            function doStuff(args) {
-                outputToConsole("I'll just echo the args: " + args);
-            }
+            outputToConsole("Unsupported Command: " + command);
+        }
 
-            function outputToConsole(text) {
-                var p = Y.Node.create("<p>" + text + "</p>");
-                Y.one("#out").append(p);
-                p.scrollIntoView();
-            }
+        function doStuff(args) {
+            outputToConsole("I'll just echo the args: " + args);
+        }
 
-            Y.on("domready", function(e) {
-				log = log4javascript.getLogger("main");
-				var appender = new log4javascript.PopUpAppender();
-				log.addAppender(appender);
-				log4javascript.setEnabled(1)
-				log.info("log started");
-				app.init();
-			    outputToConsole("Hello, welcome to application. Please type 'test' to test a method.")
-                Y.one("body").setStyle("paddingBottom", Y.one("#in").get("offsetHeight"));
-                Y.one("#in").on("keydown", function(e) {
-                    if (e.charCode === 13) {
-                        processCommand();
-                    }
-                });
+        function outputToConsole(text) {
+            var p = Y.Node.create("<p>" + text + "</p>");
+            Y.one("#out").append(p);
+            p.scrollIntoView();
+        }
+
+        Y.on("domready", function(e) {
+            log = log4javascript.getLogger("main");
+            var appender = new log4javascript.PopUpAppender();
+            log.addAppender(appender);
+            log4javascript.setEnabled(1)
+            log.info("log started");
+            app.init();
+            outputToConsole("Hello, welcome to application. Please type 'start' and 'end' to test a method.")
+            Y.one("body").setStyle("paddingBottom", Y.one("#in").get("offsetHeight"));
+            Y.one("#in").on("keydown", function(e) {
+                if (e.charCode === 13) {
+                    processCommand();
+                }
             });
         });
-    </script>
+    });
+</script>
+
 </html>
