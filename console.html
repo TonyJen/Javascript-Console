@@ -61,7 +61,7 @@
             name: "assert",
             handler: function(args) {
                 if (args.length > 0) {
-                    var result = Calculator.assert(args, "test assertion");
+                    var result = app.assert(args, "test assertion");
                     outputToConsole("result");
                 } else {
                     outputToConsole("no argument given");
