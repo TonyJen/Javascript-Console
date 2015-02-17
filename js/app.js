@@ -3,11 +3,12 @@ app = {
 				log.info("app log started");
 		},
          start : function(args){
-			    log.info("greet");
-				return ("greet test");
+			    log.info("start method");
+				return ("start method");
 		 },		  
-		 calculator : function(args){
-				return ("test");
+		 end : function(args){
+			    log.info("end method");
+				return ("end method");
 		 },	
 		 assert : function (condition, message){
 			 try{
